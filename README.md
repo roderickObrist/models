@@ -23,6 +23,8 @@ sudo dpkg -i libcudnn7-dev_7.0.3.11-1+cuda9.0_amd64.deb
 
 # LIBCUPTI
 sudo apt-get install libcupti-dev
+
+sudo reboot
 ```
 
 *Syntaxnet Modified Instructions*
