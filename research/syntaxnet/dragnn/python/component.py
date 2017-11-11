@@ -390,7 +390,9 @@ class DynamicComponentBuilder(ComponentBuilderBase):
       correctly predicted actions, and the total number of actions.
     """
     logging.info('Building component: %s', self.spec.name)
-    with tf.control_dependencies([tf.assert_equal(self.training_beam_size, 1)]):
+
+    val = tf.Print(self.training_beam_size, [ self.training_beam_size ], "Fix for access bug. Correct value:  ")
+    with tf.control_dependencies([tf.assert_equal(val, 1)]):
       stride = state.current_batch_size * self.training_beam_size
 
     cost = tf.constant(0.)

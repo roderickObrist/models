@@ -15,7 +15,7 @@
 PARSER_EVAL=bazel-bin/syntaxnet/parser_eval
 CONTEXT=syntaxnet/models/parsey_universal/context.pbtxt
 INPUT_FORMAT=stdin-untoken
-MODEL_DIR=$1
+MODEL_DIR=syntaxnet/models/parsey_universal
 
 $PARSER_EVAL \
   --input=$INPUT_FORMAT \

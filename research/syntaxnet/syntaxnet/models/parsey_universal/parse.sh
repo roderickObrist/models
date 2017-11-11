@@ -26,17 +26,17 @@ if [[ "$1" == "--conll" ]]; then
 else
   INPUT_FORMAT=stdin
 fi
-MODEL_DIR=$1
+MODEL_DIR=syntaxnet/models/parsey_universal
 
 $PARSER_EVAL \
-  --input=$INPUT_FORMAT \
+  --input=stdin \
   --output=stdout-conll \
   --hidden_layer_sizes=64 \
   --arg_prefix=brain_morpher \
   --graph_builder=structured \
-  --task_context=$CONTEXT \
-  --resource_dir=$MODEL_DIR \
-  --model_path=$MODEL_DIR/morpher-params \
+  --task_context=syntaxnet/models/parsey_universal/context.pbtxt \
+  --resource_dir=syntaxnet/models/parsey_universal \
+  --model_path=syntaxnet/models/parsey_universal/morpher-params \
   --slim_model \
   --batch_size=1024 \
   --alsologtostderr \
