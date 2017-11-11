@@ -1,11 +1,17 @@
-# TensorFlow Models
+# Installation Instructions
 
-This repository contains a number of different models implemented in [TensorFlow](https://www.tensorflow.org):
+*Start with cuda*
+http://docs.nvidia.com/cuda/cuda-installation-guide-linux/#choose-installation-method
 
-The [official models](official) are a collection of example models that use TensorFlow's high-level APIs. They are intended to be well-maintained, tested, and kept up to date with the latest stable TensorFlow API. They should also be reasonably optimized for fast performance while still being easy to read. We especially recommend newer TensorFlow users to start here.
+*Download the .dpkg*
+https://developer.nvidia.com/cuda-downloads
 
-The [research models](research) are a large collection of models implemented in TensorFlow by researchers. It is up to the individual researchers to maintain the models and/or provide support on issues and pull requests.
-
-The [samples](samples) folder contains code snippets and smaller models that demonstrate features of TensorFlow, including code presented in various blog posts.
-
-The [tutorials](tutorials) folder is a collection of models described in the [TensorFlow tutorials](https://www.tensorflow.org/tutorials/).
+```
+sudo apt-get install linux-headers-$(uname -r)
+sudo dpkg -i cuda-repo-ubuntu1704_9.0.176-1_amd64.deb
+sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1704/x86_64/7fa2af80.pub
+sudo apt-get update
+sudo apt-get install cuda
+echo "export PATH=/usr/local/cuda-9.0/bin\${PATH:+:\${PATH}}" >> ~/.bashrc
+echo "export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64 \${LD_LIBRARY_PATH:+:\${LD_LIBRARY_PATH}}" >> ~/.bashrc
+```
