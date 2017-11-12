@@ -50,7 +50,7 @@ sudo apt install gfortran
 sudo python -m pip install autograd
 sudo pip install enum34
 
-git clone --recursive git@github.com/roderickObrist/models.git
+git clone --recursive git@github.com:roderickObrist/models.git
 
 # modify as per diff patch
 nano models/research/syntaxnet/dragnn/python/component.py
