@@ -7,7 +7,7 @@ http://docs.nvidia.com/cuda/cuda-installation-guide-linux/#choose-installation-m
 # CUDA Headers for recomplication
 sudo apt-get install linux-headers-$(uname -r)
 
-# DPKG https://developer.nvidia.com/cuda-downloads
+# Download local .dpkg from https://developer.nvidia.com/cuda-downloads
 sudo dpkg -i cuda-repo-ubuntu1704_9.0.176-1_amd64.deb
 sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1704/x86_64/7fa2af80.pub
 sudo apt-get update
@@ -47,13 +47,12 @@ sudo apt-get install -y graphviz libgraphviz-dev
 pip install pygraphviz --install-option="--include-path=/usr/include/graphviz" --install-option="--library-path=/usr/lib/graphviz/"
 
 sudo apt install gfortran
-sudo python -m pip install autograd
-sudo pip install enum34
+sudo -H python -m pip install autograd
+sudo -H pip install enum34
 
 git clone --recursive git@github.com:roderickObrist/models.git
 
 # modify as per diff patch
-nano models/research/syntaxnet/dragnn/python/component.py
 nano models/research/syntaxnet/tensorflow/tensorflow/core/framework/variant_op_registry.cc
 
 cd models/research/syntaxnet/tensorflow
