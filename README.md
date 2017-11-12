@@ -48,6 +48,6 @@ pip install pygraphviz --install-option="--include-path=/usr/include/graphviz" -
 
 sudo apt install gfortran
 sudo python -m pip install autograd
-sudo pip install enum enum34
+sudo pip install enum34
 
 git clone --recursive git@github.com/roderickObrist/models.git
