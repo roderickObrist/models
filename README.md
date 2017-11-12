@@ -51,3 +51,12 @@ sudo python -m pip install autograd
 sudo pip install enum34
 
 git clone --recursive git@github.com/roderickObrist/models.git
+
+# modify as per diff patch
+nano models/research/syntaxnet/dragnn/python/component.py
+nano models/research/syntaxnet/tensorflow/tensorflow/core/framework/variant_op_registry.cc
+
+cd models/research/syntaxnet/tensorflow
+./configure
+cd ..
+bazel test ... --action_env=PYTHON_BIN_PATH=/usr/bin/python --action_env=PYTHON_LIB_PATH=/usr/local/lib/python2.7/dist-packages
