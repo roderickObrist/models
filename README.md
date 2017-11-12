@@ -20,6 +20,7 @@ echo "export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64 \${LD_LIBRARY_PATH:+:\${L
 # Get CUDNN
 sudo dpkg -i libcudnn7_7.0.3.11-1+cuda9.0_amd64.deb
 sudo dpkg -i libcudnn7-dev_7.0.3.11-1+cuda9.0_amd64.deb
+echo "export CUDA_HOME=/usr/lib/x86_64-linux-gnu" >> ~/.bashrc
 
 # LIBCUPTI
 sudo apt-get install libcupti-dev
