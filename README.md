@@ -31,12 +31,12 @@ sudo dpkg -i libcudnn7-doc_7.0.3.11-1+cuda9.0_amd64.deb
 
 # Test CUDNN
 mkdir tmp
-cp -r /usr/src/cudnn_samples_v7/ tmp
-cd tmp/cudnn_samples_v7/mnistCUDNN
-make clean && make && ./mnistCUDNN
+cp -r /usr/src/ tmp
+cd tmp/mnistCUDNN
+make clean && make && sudo ./mnistCUDNN
 
 # look for Test passed!
-cd ../../../
+cd ../../
 rm -r tmp
 ```
 
@@ -45,28 +45,21 @@ rm -r tmp
 # Install Java for Bazel
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
-sudo apt-get -y install oracle-java8-installer libcupti-dev graphviz libgraphviz-dev
+sudo apt-get -y install oracle-java8-installer libcupti-dev graphviz libgraphviz-dev swig python-pip gfortran
 
 sudo dpkg -i bazel_0.7.0-linux-x86_64.deb
 
-sudo apt-get install swig python-pip gfortran
-pip install --upgrade pip
-pip install -U protobuf==3.3.0
-pip install mock
-pip install asciitree
-sudo -H pip install numpy
-sudo apt-get install -y 
-sudo -H pip install autograd enum34 pygraphviz \
+sudo -H pip install --upgrade pip
+sudo -H pip install -U mock asciitree protobuf==3.3.0 autograd enum34 numpy
+sudo -H pip install pygraphviz \
   --install-option="--include-path=/usr/include/graphviz" \
   --install-option="--library-path=/usr/lib/graphviz/"
-
-sudo -H python -m pip install 
 
 # modify as per diff patch https://github.com/tensorflow/models/issues/2355
 cp variant_op_registry.cc research/syntaxnet/tensorflow/tensorflow/core/framework/variant_op_registry.cc
 # Modified instructions for GPU support https://github.com/tensorflow/models/issues/248
-cp build_defs.bzl.tpl tensorflow/third_party/gpus/cuda/build_defs.bzl.tpl
-cp CROSSTOOL_nvcc.tpl tensorflow/third_party/gpus/crosstool/CROSSTOOL
+cp build_defs.bzl.tpl research/syntaxnet/tensorflow/third_party/gpus/cuda/build_defs.bzl.tpl
+cp CROSSTOOL_nvcc.tpl research/syntaxnet/tensorflow/third_party/gpus/crosstool/CROSSTOOL
 
 cd research/syntaxnet/tensorflow
 
