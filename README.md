@@ -55,7 +55,9 @@ pip install mock
 pip install asciitree
 sudo -H pip install numpy
 sudo apt-get install -y 
-sudo -H pip install autograd enum34 pygraphviz --install-option="--include-path=/usr/include/graphviz" --install-option="--library-path=/usr/lib/graphviz/"
+sudo -H pip install autograd enum34 pygraphviz \
+  --install-option="--include-path=/usr/include/graphviz" \
+  --install-option="--library-path=/usr/lib/graphviz/"
 
 sudo -H python -m pip install 
 
@@ -72,14 +74,6 @@ cd research/syntaxnet/tensorflow
 ```
 
 ```
-# In the file tensorflow/third_party/gpus/crosstool/CROSSTOOL,
-# replace every `cxx_builtin_include_directory: "%{cuda_include_path}"`
-# with `cxx_builtin_include_directory: "/usr/local/cuda/include"`
-
-# Force Tensorflow to use Cuda by changing the //conditions:default part in
-# syntaxnet/syntaxnet.bzl from `if_false` to `if_true`
-# tensorflow/third_party/gpus/cuda/build_defs.bzl  from `if_false` to `if_true`
-
 export TF_NEED_CUDA=1
 export CUDA_TOOLKIT_PATH=$CUDA_HOME
 export TF_CUDA_VERSION=9.0
@@ -89,9 +83,6 @@ export CUDNN_INSTALL_PATH=$CUDA_HOME
 #simlink a library that does not get placed correctly
 sudo ln -s /usr/lib/x86_64-linux-gnu/libcudnn.so.7 $CUDA_HOME/libcudnn.so.7
 
-```
-
-```
 cd ..
 
 bazel test \
