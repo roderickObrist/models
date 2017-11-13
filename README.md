@@ -18,6 +18,7 @@ sudo apt-get install cuda
 echo "export PATH=/usr/local/cuda-9.0/bin\${PATH:+:\${PATH}}" >> ~/.bashrc
 echo "export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64${LD_LIBRARY_PATH:+:\${LD_LIBRARY_PATH}}" >> ~/.bashrc
 echo "export CUDA_HOME=/usr/local/cuda-9.0" >> ~/.bashrc
+echo "export CUDA_VISIBLE_DEVICES=1" >> ~/.bashrc
 sudo reboot
 
 # Test CUDA
