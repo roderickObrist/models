@@ -45,18 +45,13 @@ rm -r tmp
 # Install Java for Bazel
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
-sudo apt-get -y install oracle-java8-installer libcupti-dev graphviz libgraphviz-dev
+sudo apt-get -y install oracle-java8-installer libcupti-dev graphviz libgraphviz-dev swig python-pip gfortran
 
 sudo dpkg -i bazel_0.7.0-linux-x86_64.deb
 
-sudo apt-get install swig python-pip gfortran
 pip install --upgrade pip
-pip install -U protobuf==3.3.0
-pip install mock
-pip install asciitree
-sudo -H pip install numpy
-sudo apt-get install -y 
-sudo -H pip install autograd enum34 pygraphviz \
+pip install -U mock asciitree protobuf==3.3.0 autograd enum34 numpy
+pip install pygraphviz \
   --install-option="--include-path=/usr/include/graphviz" \
   --install-option="--library-path=/usr/lib/graphviz/"
 
