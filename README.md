@@ -3,7 +3,10 @@
 ```
 git clone --recursive git@github.com:roderickObrist/models.git
 cd models
+````
 
+# CUDA
+```
 # CUDA Headers for recomplication
 sudo apt-get install linux-headers-$(uname -r)
 
@@ -64,14 +67,16 @@ sudo apt install gfortran
 sudo -H python -m pip install autograd
 sudo -H pip install enum34
 
-# modify as per diff patch
-nano models/research/syntaxnet/tensorflow/tensorflow/core/framework/variant_op_registry.cc
+# modify as per diff patch https://github.com/tensorflow/models/issues/2355
+cp variant_op_registry.cc models/research/syntaxnet/tensorflow/tensorflow/core/framework/variant_op_registry.cc
 
-cd models/research/syntaxnet/tensorflow
+cd research/syntaxnet/tensorflow
+
+# CUDNN is found here/usr/lib/x86_64-linux-gnu
 ./configure
+
 cd ..
 bazel test ... --action_env=PYTHON_BIN_PATH=/usr/bin/python --action_env=PYTHON_LIB_PATH=/usr/local/lib/python2.7/dist-packages
+```
 
 
-
-echo "export CUDA_HOME=/usr/lib/x86_64-linux-gnu" >> ~/.bashrc
