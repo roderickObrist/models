@@ -1,8 +1,8 @@
 # Installation Instructions
 
 ```
-sudo apt-get install git gnupg-curl zlib1g-dev linux-headers-$(uname -r)
-git clone --recursive git@github.com:roderickObrist/models.git
+sudo apt-get install git gnupg-curl zlib1g-dev linux-headers-$(uname -r) openssh-server
+git clone --recursive https://github.com/roderickObrist/models.git
 cd models
 ````
 
@@ -85,7 +85,7 @@ sudo ln -s /usr/lib/x86_64-linux-gnu/libcudnn.so.7 $CUDA_HOME/libcudnn.so.7
 
 cd ..
 
-bazel test \
+bazel test -j1 \
   -c opt --config=cuda --define using_cuda_nvcc=true \
   --define using_gcudacc=true syntaxnet/... util/utf8/... \
   --action_env=PYTHON_BIN_PATH=/usr/bin/python \
