@@ -1,7 +1,7 @@
 # Installation Instructions
 
 ```
-sudo apt-get install git gnupg-curl
+sudo apt-get install git gnupg-curl zlib1g-dev
 git clone --recursive git@github.com:roderickObrist/models.git
 cd models
 ````
@@ -18,8 +18,8 @@ sudo apt-get install cuda
 
 # Post installation environment variables
 echo "export PATH=/usr/local/cuda-9.0/bin\${PATH:+:\${PATH}}" >> ~/.bashrc
-echo "export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64 \${LD_LIBRARY_PATH:+:\${LD_LIBRARY_PATH}}" >> ~/.bashrc
-source ~/.bashrc
+echo "export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64${LD_LIBRARY_PATH:+:\${LD_LIBRARY_PATH}}" >> ~/.bashrc
+sudo reboot
 
 # Test CUDA
 echo $PATH
@@ -39,14 +39,13 @@ mkdir tmp
 cp -r /usr/src/cudnn_samples_v7/ tmp
 cd tmp/cudnn_samples_v7/mnistCUDNN
 make clean && make
+# look for Test passed!
 ./mnistCUDNN
 cd ../../../
-rm temp
+rm -r tmp
 
 # LIBCUPTI
 sudo apt-get install libcupti-dev
-
-sudo reboot
 ```
 
 *Syntaxnet Modified Instructions*
@@ -56,23 +55,23 @@ sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
 sudo apt-get install oracle-java8-installer
 
-wget https://github.com/bazelbuild/bazel/releases/download/0.7.0/bazel_0.7.0-linux-x86_64.deb
 sudo dpkg -i bazel_0.7.0-linux-x86_64.deb
 
-sudo apt-get install swig
+sudo apt-get install swig python-pip
+sudo -H pip install --upgrade pip
 pip install -U protobuf==3.3.0
 pip install mock
 pip install asciitree
-pip install numpy
+sudo -H pip install numpy
 sudo apt-get install -y graphviz libgraphviz-dev
-pip install pygraphviz --install-option="--include-path=/usr/include/graphviz" --install-option="--library-path=/usr/lib/graphviz/"
+sudo -H pip install pygraphviz --install-option="--include-path=/usr/include/graphviz" --install-option="--library-path=/usr/lib/graphviz/"
 
 sudo apt install gfortran
 sudo -H python -m pip install autograd
 sudo -H pip install enum34
 
 # modify as per diff patch https://github.com/tensorflow/models/issues/2355
-cp variant_op_registry.cc models/research/syntaxnet/tensorflow/tensorflow/core/framework/variant_op_registry.cc
+cp variant_op_registry.cc research/syntaxnet/tensorflow/tensorflow/core/framework/variant_op_registry.cc
 
 cd research/syntaxnet/tensorflow
 
@@ -84,16 +83,21 @@ cd research/syntaxnet/tensorflow
 ```
 # In the file tensorflow/third_party/gpus/crosstool/CROSSTOOL,
 # replace every `cxx_builtin_include_directory: "%{cuda_include_path}"`
-# with `cxx_builtin_include_directory: "your/cuda/home/path/include"`
+# with `cxx_builtin_include_directory: "/usr/local/cuda/include"`
 
-# Force Tensorflow to use Cuda by changing the //conditions:default part in syntaxnet/syntaxnet.bzl from `if_false` to `if_true`.
+# Force Tensorflow to use Cuda by changing the //conditions:default part in
+# syntaxnet/syntaxnet.bzl from `if_false` to `if_true`
+# tensorflow/third_party/gpus/cuda/build_defs.bzl  from `if_false` to `if_true`
 
-# Do the same thing for tensorflow/third_party/gpus/cuda/build_defs.bzl
 export TF_NEED_CUDA=1
 export CUDA_TOOLKIT_PATH=$CUDA_HOME
 export TF_CUDA_VERSION=9.0
-export TF_CUDNN_VERSION=7.0
+export TF_CUDNN_VERSION=7
 export CUDNN_INSTALL_PATH=$CUDA_HOME
+
+#simlink a library that does not get placed correctly
+sudo ln -s /usr/lib/x86_64-linux-gnu/libcudnn.so.7 $CUDA_HOME/libcudnn.so.7
+
 ```
 
 ```
