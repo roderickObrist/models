@@ -18,6 +18,7 @@ sudo apt-get install cuda
 # Post installation environment variables
 echo "export PATH=/usr/local/cuda-9.0/bin\${PATH:+:\${PATH}}" >> ~/.bashrc
 echo "export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64 \${LD_LIBRARY_PATH:+:\${LD_LIBRARY_PATH}}" >> ~/.bashrc
+source ~/.bashrc
 
 # Test CUDA
 echo $PATH
@@ -28,7 +29,9 @@ cat /proc/driver/nvidia/version
 sudo dpkg -i libcudnn7_7.0.3.11-1+cuda9.0_amd64.deb
 sudo dpkg -i libcudnn7-dev_7.0.3.11-1+cuda9.0_amd64.deb
 sudo dpkg -i libcudnn7-doc_7.0.3.11-1+cuda9.0_amd64.deb
+
 echo "export CUDA_HOME=/usr/local/cuda-9.0" >> ~/.bashrc
+source ~/.bashrc
 
 # Test CUDNN
 mkdir tmp
@@ -74,9 +77,32 @@ cd research/syntaxnet/tensorflow
 
 # CUDNN is found here/usr/lib/x86_64-linux-gnu
 ./configure
+```
 
+# Modified instructions for GPU support https://github.com/tensorflow/models/issues/248
+```
+# In the file tensorflow/third_party/gpus/crosstool/CROSSTOOL,
+# replace every `cxx_builtin_include_directory: "%{cuda_include_path}"`
+# with `cxx_builtin_include_directory: "your/cuda/home/path/include"`
+
+# Force Tensorflow to use Cuda by changing the //conditions:default part in syntaxnet/syntaxnet.bzl from `if_false` to `if_true`.
+
+# Do the same thing for tensorflow/third_party/gpus/cuda/build_defs.bzl
+export TF_NEED_CUDA=1
+export CUDA_TOOLKIT_PATH=$CUDA_HOME
+export TF_CUDA_VERSION=9.0
+export TF_CUDNN_VERSION=7.0
+export CUDNN_INSTALL_PATH=$CUDA_HOME
+```
+
+```
 cd ..
-bazel test ... --action_env=PYTHON_BIN_PATH=/usr/bin/python --action_env=PYTHON_LIB_PATH=/usr/local/lib/python2.7/dist-packages
+
+bazel test \
+  -c opt --config=cuda --define using_cuda_nvcc=true \
+  --define using_gcudacc=true syntaxnet/... util/utf8/... \
+  --action_env=PYTHON_BIN_PATH=/usr/bin/python \
+  --action_env=PYTHON_LIB_PATH=/usr/local/lib/python2.7/dist-packages
 ```
 
 
