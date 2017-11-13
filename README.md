@@ -29,7 +29,7 @@ cp -r /usr/src/cudnn_samples_v7/mnistCUDNN tmp
 cd tmp/mnistCUDNN
 make clean && make && sudo ./mnistCUDNN
 
-# look for Test passed!
+# look for Test passed!, if it fails try sudo reboot
 cd ../../
 rm -r tmp
 
@@ -53,16 +53,17 @@ pip install pygraphviz \
 
 # modify as per diff patch https://github.com/tensorflow/models/issues/2355
 cp variant_op_registry.cc research/syntaxnet/tensorflow/tensorflow/core/framework/variant_op_registry.cc
+
 # Modified instructions for GPU support https://github.com/tensorflow/models/issues/248
 cp build_defs.bzl.tpl research/syntaxnet/tensorflow/third_party/gpus/cuda/build_defs.bzl.tpl
-cp CROSSTOOL_nvcc.tpl research/syntaxnet/tensorflow/third_party/gpus/crosstool/CROSSTOOL
+cp CROSSTOOL_nvcc.tpl research/syntaxnet/tensorflow/third_party/gpus/crosstool/CROSSTOOL_nvcc.tpl
 
 cd research/syntaxnet/tensorflow
 
 # CUDNN is found here/usr/lib/x86_64-linux-gnu
 ./configure
 
-#simlink a library that does not get placed correctly
+# Simlink a library that does not get placed correctly
 sudo ln -s /usr/lib/x86_64-linux-gnu/libcudnn.so.7 $CUDA_HOME/libcudnn.so.7
 
 cd ..
@@ -76,5 +77,3 @@ bazel test \
   --action_env=PYTHON_BIN_PATH=/usr/bin/python \
   --action_env=PYTHON_LIB_PATH=/usr/local/lib/python2.7/dist-packages
 ```
-
-
