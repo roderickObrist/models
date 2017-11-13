@@ -32,7 +32,7 @@ sudo dpkg -i libcudnn7-doc_7.0.3.11-1+cuda9.0_amd64.deb
 # Test CUDNN
 mkdir tmp
 cp -r /usr/src/cudnn_samples_v7/ tmp
-cd tmp/cudnn_samples_v7/mnistCUDNN
+cd tmp/mnistCUDNN
 make clean && make && ./mnistCUDNN
 
 # look for Test passed!
