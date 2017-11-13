@@ -1,6 +1,7 @@
 # Installation Instructions
 
 ```
+sudo apt-get install git gnupg-curl
 git clone --recursive git@github.com:roderickObrist/models.git
 cd models
 ````
