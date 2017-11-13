@@ -50,7 +50,7 @@ sudo apt-get -y install oracle-java8-installer libcupti-dev graphviz libgraphviz
 sudo dpkg -i bazel_0.7.0-linux-x86_64.deb
 
 sudo apt-get install swig python-pip gfortran
-sudo -H pip install --upgrade pip
+pip install --upgrade pip
 pip install -U protobuf==3.3.0
 pip install mock
 pip install asciitree
