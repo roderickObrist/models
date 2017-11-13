@@ -1,7 +1,7 @@
 # Installation Instructions
 
 ```
-sudo apt-get install git gnupg-curl zlib1g-dev
+sudo apt-get install git gnupg-curl zlib1g-dev linux-headers-$(uname -r)
 git clone --recursive git@github.com:roderickObrist/models.git
 cd models
 ````
@@ -9,8 +9,6 @@ cd models
 # CUDA
 ```
 # CUDA Headers for recomplication
-sudo apt-get install linux-headers-$(uname -r)
-
 sudo dpkg -i cuda-repo-ubuntu1604_9.0.176-1_amd64.deb
 sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/7fa2af80.pub
 sudo apt-get update
@@ -19,20 +17,16 @@ sudo apt-get install cuda
 # Post installation environment variables
 echo "export PATH=/usr/local/cuda-9.0/bin\${PATH:+:\${PATH}}" >> ~/.bashrc
 echo "export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64${LD_LIBRARY_PATH:+:\${LD_LIBRARY_PATH}}" >> ~/.bashrc
+echo "export CUDA_HOME=/usr/local/cuda-9.0" >> ~/.bashrc
 sudo reboot
 
 # Test CUDA
-echo $PATH
-echo $LD_LIBRARY_PATH
 cat /proc/driver/nvidia/version
 
 # Get CUDNN
 sudo dpkg -i libcudnn7_7.0.3.11-1+cuda9.0_amd64.deb
 sudo dpkg -i libcudnn7-dev_7.0.3.11-1+cuda9.0_amd64.deb
 sudo dpkg -i libcudnn7-doc_7.0.3.11-1+cuda9.0_amd64.deb
-
-echo "export CUDA_HOME=/usr/local/cuda-9.0" >> ~/.bashrc
-source ~/.bashrc
 
 # Test CUDNN
 mkdir tmp
@@ -43,9 +37,6 @@ make clean && make
 ./mnistCUDNN
 cd ../../../
 rm -r tmp
-
-# LIBCUPTI
-sudo apt-get install libcupti-dev
 ```
 
 *Syntaxnet Modified Instructions*
@@ -53,25 +44,26 @@ sudo apt-get install libcupti-dev
 # Install Java for Bazel
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
-sudo apt-get install oracle-java8-installer
+sudo apt-get -y install oracle-java8-installer libcupti-dev graphviz libgraphviz-dev
 
 sudo dpkg -i bazel_0.7.0-linux-x86_64.deb
 
-sudo apt-get install swig python-pip
+sudo apt-get install swig python-pip gfortran
 sudo -H pip install --upgrade pip
 pip install -U protobuf==3.3.0
 pip install mock
 pip install asciitree
 sudo -H pip install numpy
-sudo apt-get install -y graphviz libgraphviz-dev
-sudo -H pip install pygraphviz --install-option="--include-path=/usr/include/graphviz" --install-option="--library-path=/usr/lib/graphviz/"
+sudo apt-get install -y 
+sudo -H pip install autograd enum34 pygraphviz --install-option="--include-path=/usr/include/graphviz" --install-option="--library-path=/usr/lib/graphviz/"
 
-sudo apt install gfortran
-sudo -H python -m pip install autograd
-sudo -H pip install enum34
+sudo -H python -m pip install 
 
 # modify as per diff patch https://github.com/tensorflow/models/issues/2355
 cp variant_op_registry.cc research/syntaxnet/tensorflow/tensorflow/core/framework/variant_op_registry.cc
+# Modified instructions for GPU support https://github.com/tensorflow/models/issues/248
+cp build_defs.bzl.tpl tensorflow/third_party/gpus/cuda/build_defs.bzl.tpl
+cp CROSSTOOL_nvcc.tpl tensorflow/third_party/gpus/crosstool/CROSSTOOL
 
 cd research/syntaxnet/tensorflow
 
@@ -79,7 +71,6 @@ cd research/syntaxnet/tensorflow
 ./configure
 ```
 
-# Modified instructions for GPU support https://github.com/tensorflow/models/issues/248
 ```
 # In the file tensorflow/third_party/gpus/crosstool/CROSSTOOL,
 # replace every `cxx_builtin_include_directory: "%{cuda_include_path}"`
