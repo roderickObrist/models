@@ -7,6 +7,8 @@ build --host_force_python=py2
 build --define=use_fast_cpp_protos=true
 build --define=allow_oversize_protos=true
 
+build --config=cuda
+
 test --force_python=py2
 test --host_force_python=py2
 
