@@ -15,6 +15,7 @@ sudo apt-get install cuda
 # Post installation environment variables
 cat env.txt >> ~/.bashrc
 
+<<<<<<< HEAD
 # Test CUDA
 cat /proc/driver/nvidia/version
 
@@ -77,3 +78,8 @@ bazel test \
   --action_env=PYTHON_BIN_PATH=/usr/bin/python \
   --action_env=PYTHON_LIB_PATH=/usr/local/lib/python2.7/dist-packages
 ```
+=======
+The [samples folder](samples) contains code snippets and smaller models that demonstrate features of TensorFlow, including code presented in various blog posts.
+
+The [tutorials folder](tutorials) is a collection of models described in the [TensorFlow tutorials](https://www.tensorflow.org/tutorials/).
+>>>>>>> d07447a3e34bc66acd9ba7267437ebe9d15b45c0
