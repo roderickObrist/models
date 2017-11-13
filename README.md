@@ -49,19 +49,17 @@ sudo apt-get -y install oracle-java8-installer libcupti-dev graphviz libgraphviz
 
 sudo dpkg -i bazel_0.7.0-linux-x86_64.deb
 
-pip install --upgrade pip
-pip install -U mock asciitree protobuf==3.3.0 autograd enum34 numpy
-pip install pygraphviz \
+sudo -H pip install --upgrade pip
+sudo -H pip install -U mock asciitree protobuf==3.3.0 autograd enum34 numpy
+sudo -H pip install pygraphviz \
   --install-option="--include-path=/usr/include/graphviz" \
   --install-option="--library-path=/usr/lib/graphviz/"
-
-sudo -H python -m pip install 
 
 # modify as per diff patch https://github.com/tensorflow/models/issues/2355
 cp variant_op_registry.cc research/syntaxnet/tensorflow/tensorflow/core/framework/variant_op_registry.cc
 # Modified instructions for GPU support https://github.com/tensorflow/models/issues/248
-cp build_defs.bzl.tpl tensorflow/third_party/gpus/cuda/build_defs.bzl.tpl
-cp CROSSTOOL_nvcc.tpl tensorflow/third_party/gpus/crosstool/CROSSTOOL
+cp build_defs.bzl.tpl research/syntaxnet/tensorflow/third_party/gpus/cuda/build_defs.bzl.tpl
+cp CROSSTOOL_nvcc.tpl research/syntaxnet/tensorflow/third_party/gpus/crosstool/CROSSTOOL
 
 cd research/syntaxnet/tensorflow
 
