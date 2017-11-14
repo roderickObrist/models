@@ -2,11 +2,11 @@
 cd models/research/syntaxnet
 
 # First you need to download a corpus
-git clone https://github.com/UniversalDependencies/UD_English/tree/master
+git clone https://github.com/UniversalDependencies/UD_English
 cd UD_English
 
 # Then you must convert from conllu to conll
-wget https://github.com/dsindex/syntaxnet/blob/master/convert.py
+wget https://raw.githubusercontent.com/dsindex/syntaxnet/master/convert.py
 
 python convert.py < en-ud-train.conllu > en-ud-train.conll
 python convert.py < en-ud-dev.conllu > en-ud-dev.conll
