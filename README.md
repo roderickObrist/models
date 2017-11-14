@@ -15,6 +15,9 @@ sudo apt-get install cuda
 # Post installation environment variables
 cat env.txt >> ~/.bashrc
 
+# important to reboot
+sudo reboot
+
 # Test CUDA
 cat /proc/driver/nvidia/version
 
@@ -40,7 +43,7 @@ sudo apt-get -y install oracle-java8-installer libcupti-dev graphviz libgraphviz
 
 sudo dpkg -i bazel_0.7.0-linux-x86_64.deb
 
-pip install --upgrade pip
+# Do not upgrade pip
 pip install mock
 pip install asciitree
 pip install protobuf==3.3.0
@@ -51,14 +54,16 @@ pip install pygraphviz \
   --install-option="--include-path=/usr/include/graphviz" \
   --install-option="--library-path=/usr/lib/graphviz/"
 
+# Set tensorflow to latest
+cd research/syntaxnet/tensorflow
+git checkout master
+
 # modify as per diff patch https://github.com/tensorflow/models/issues/2355
-cp variant_op_registry.cc research/syntaxnet/tensorflow/tensorflow/core/framework/variant_op_registry.cc
+cp ../../../variant_op_registry.cc tensorflow/core/framework/variant_op_registry.cc
 
 # Modified instructions for GPU support https://github.com/tensorflow/models/issues/248
-cp build_defs.bzl.tpl research/syntaxnet/tensorflow/third_party/gpus/cuda/build_defs.bzl.tpl
-cp CROSSTOOL_nvcc.tpl research/syntaxnet/tensorflow/third_party/gpus/crosstool/CROSSTOOL_nvcc.tpl
-
-cd research/syntaxnet/tensorflow
+cp ../../../build_defs.bzl.tpl third_party/gpus/cuda/build_defs.bzl.tpl
+cp ../../../CROSSTOOL_nvcc.tpl third_party/gpus/crosstool/CROSSTOOL_nvcc.tpl
 
 # CUDNN is found here/usr/lib/x86_64-linux-gnu
 ./configure
