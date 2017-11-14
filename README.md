@@ -54,9 +54,9 @@ pip install pygraphviz \
   --install-option="--include-path=/usr/include/graphviz" \
   --install-option="--library-path=/usr/lib/graphviz/"
 
-# Set tensorflow to latest
+# Set tensorflow last stable release
 cd research/syntaxnet/tensorflow
-git checkout master
+git checkout e120e50bf5fd883cc28b584c720d959341db502d
 
 # modify as per diff patch https://github.com/tensorflow/models/issues/2355
 cp ../../../variant_op_registry.cc tensorflow/core/framework/variant_op_registry.cc
