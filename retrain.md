@@ -92,12 +92,12 @@ bazel-bin/syntaxnet/parser_trainer \
   --learning_rate=0.02 \
   --momentum=0.9 \
   --output_path=syntaxnet/models \
-  --task_context=syntaxnet/models/brain_parser/greedy/$PARAMS/context \
+  --task_context=syntaxnet/models/brain_parser/greedy/512,512-0.08-2500-0.85-4/context \
   --seed=0 \
   --training_corpus=projectivized-training-corpus \
   --tuning_corpus=tagged-tuning-corpus \
   --params=200x200-0.02-100-0.9-0 \
-  --pretrained_params=models/brain_parser/greedy/$PARAMS/model \
+  --pretrained_params=models/brain_parser/greedy/512,512-0.08-2500-0.85-4/model \
   --pretrained_params_names=\
 embedding_matrix_0,embedding_matrix_1,embedding_matrix_2,\
 bias_0,weights_0,bias_1,weights_1
