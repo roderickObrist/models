@@ -30,9 +30,9 @@ sudo dpkg -i libcudnn7-doc_7.0.3.11-1+cuda9.0_amd64.deb
 mkdir tmp
 cp -r /usr/src/cudnn_samples_v7/mnistCUDNN tmp
 cd tmp/mnistCUDNN
-make clean && make && sudo ./mnistCUDNN
+make clean && make && ./mnistCUDNN
 
-# look for Test passed!, if it fails try sudo reboot
+# look for Test passed!
 cd ../../
 rm -r tmp
 
@@ -43,7 +43,7 @@ sudo apt-get -y install oracle-java8-installer libcupti-dev graphviz libgraphviz
 
 sudo dpkg -i bazel_0.7.0-linux-x86_64.deb
 
-# Do not upgrade pip
+# Ignore warnings, do not upgrade pip
 pip install mock
 pip install asciitree
 pip install protobuf==3.3.0
