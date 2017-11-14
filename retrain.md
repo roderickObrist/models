@@ -1,3 +1,4 @@
+```
 cd models/research/syntaxnet
 
 # First you need to download a corpus
@@ -68,15 +69,37 @@ bazel-bin/syntaxnet/parser_trainer \
   --checkpoint_every=1000 \
   --logtostderr
 
+# Prepare for structured parse
 for SET in training tuning test; do
  bazel-bin/syntaxnet/parser_eval \
-  --task_context=syntaxnet/models/brain_parser/greedy/128-0.08-2500-0.9-0/context \
+  --task_context=syntaxnet/models/brain_parser/greedy/512,512-0.08-2500-0.85-4/context \
   --hidden_layer_sizes=512,512 \
-  --batch_size=256 \
+  --batch_size=32 \
   --beam_size=1 \
   --input=tagged-$SET-corpus \
   --output=parsed-$SET-corpus \
   --arg_prefix=brain_parser \
   --graph_builder=greedy \
-  --model_path=syntaxnet/models/brain_parser/greedy/128-0.08-2500-0.9-0/model
+  --model_path=syntaxnet/models/brain_parser/greedy/512,512-0.08-2500-0.85-4/model
 done
+
+bazel-bin/syntaxnet/parser_trainer \
+  --arg_prefix=brain_parser \
+  --batch_size=8 \
+  --decay_steps=100 \
+  --graph_builder=structured \
+  --hidden_layer_sizes=200,200 \
+  --learning_rate=0.02 \
+  --momentum=0.9 \
+  --output_path=syntaxnet/models \
+  --task_context=syntaxnet/models/brain_parser/greedy/$PARAMS/context \
+  --seed=0 \
+  --training_corpus=projectivized-training-corpus \
+  --tuning_corpus=tagged-tuning-corpus \
+  --params=200x200-0.02-100-0.9-0 \
+  --pretrained_params=models/brain_parser/greedy/$PARAMS/model \
+  --pretrained_params_names=\
+embedding_matrix_0,embedding_matrix_1,embedding_matrix_2,\
+bias_0,weights_0,bias_1,weights_1
+
+```
